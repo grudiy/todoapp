@@ -1,4 +1,3 @@
-# work with file implemented
 
 while True:
     user_action = input("Type: add, edit, show, done, exit: ")
@@ -36,13 +35,15 @@ while True:
 
         case "done":
             number = int(input("Enter todo number for complete:"))
-            number = number - 1
+            index = number - 1
             with open("todos.txt", "r") as file:
                 todos = file.readlines()
-            todos.pop(number)
+            todo_to_remove = todos[index].strip('\n')
+            todos.pop(index)
             with open("todos.txt", "w") as file:
                 file.writelines(todos)
-            print("Completed.")
+            message = f"Completed: {todo_to_remove}"
+            print(message)
 
         case "exit":
             break
