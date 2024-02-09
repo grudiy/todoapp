@@ -1,4 +1,4 @@
-# Added storing to the txt file
+# work with file implemented
 
 while True:
     user_action = input("Type: add, edit, show, done, exit: ")
@@ -6,44 +6,42 @@ while True:
     match user_action:
         case "add":
             todo = input("Enter a todo: ") + "\n"
-
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
             todos.append(todo)
-            file = open('todos.txt', 'w')
-            file.writelines(todos)
-            file.close()
+            with open("todos.txt", "w") as file:
+                file.writelines(todos)
 
         case "show":
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
-
-            # now we need to strip '/n' from every item
-            new_todos = []
-            for item in todos:
-                new_item = item.strip('\n')
-                new_todos.append(new_item)
-            # or just list comprehensions
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
+            # strip /n with the list comprehensions
             # new_todos = [item.strip('\n') for item in todos]
-
-            for index, item in enumerate(new_todos):
+            for index, item in enumerate(todos):
+                item = item.strip('\n')
                 row = f"{index + 1}.{item}"
                 print(row)
 
         case "edit":
             number = int(input("Enter todo number for edit:"))
             number = number - 1
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
             print("Editing ", todos[number])
-            new_todo = input("New value: ")
+            new_todo = input("New value: ") + "\n"
             todos[number] = new_todo
+            with open("todos.txt", "w") as file:
+                file.writelines(todos)
             print("Saved: ", todos[number])
 
         case "done":
             number = int(input("Enter todo number for complete:"))
             number = number - 1
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
             todos.pop(number)
+            with open("todos.txt", "w") as file:
+                file.writelines(todos)
             print("Completed.")
 
         case "exit":
