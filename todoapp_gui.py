@@ -1,6 +1,11 @@
 import time
 import PySimpleGUI as gui
 import functions
+import os
+
+if not os.path.exists("todos.txt"):
+    with open("todos.txt", "w") as f:
+        pass
 
 label_time = gui.Text('', key='label_time')
 label_intro_text = gui.Text('Type in a ToDo')
